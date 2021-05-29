@@ -32,8 +32,9 @@ const validate = (nameValue, urlValue) => {
     alert("Please submit values for both fields.");
     return false;
   }
-  if (!urlValue.match(regex) || urlValue.includes("www.")) {
-    alert("Please provide a valid web address that includes https://.");
+  if (!urlValue.match(regex) || !urlValue.includes("https://")) {
+    alert(`Please provide a valid web address that includes https://.
+    An address starting with only www. is invalid.`);
     return false;
   }
   //   Valid
