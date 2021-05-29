@@ -87,7 +87,7 @@ const fetchBookmarks = () => {
     // Create bookmarks array in localStorage
     const id = `http://github.com/jedchernandez/bookmark-app`;
     bookmarks[id] = {
-      name: "bookmark-app",
+      name: "source-code",
       url: "https://github.com/jedchernandez/bookmark-app",
     };
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
