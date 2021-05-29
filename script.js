@@ -26,14 +26,14 @@ window.addEventListener("click", (e) =>
 // Validate Form
 const validate = (nameValue, urlValue) => {
   const expression =
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g;
   const regex = new RegExp(expression);
   if (!nameValue || !urlValue) {
     alert("Please submit values for both fields.");
     return false;
   }
-  if (!urlValue.match(regex)) {
-    alert("Please provide a valid web address.");
+  if (!urlValue.match(regex) || urlValue.includes("www.")) {
+    alert("Please provide a valid web address that includes https://.");
     return false;
   }
   //   Valid
@@ -110,9 +110,7 @@ let storeBookmark = (e) => {
   e.preventDefault();
   const nameValue = websiteNameEl.value;
   let urlValue = websiteUrlEl.value;
-  if (!urlValue.includes("http://", "https://")) {
-    urlValue = `https://${urlValue}`;
-  }
+  // Validate
   if (!validate(nameValue, urlValue)) {
     return false;
   }
@@ -120,7 +118,7 @@ let storeBookmark = (e) => {
     name: nameValue,
     url: urlValue,
   };
-  bookmarks.push(bookmark);
+  bookmarks[urlValue] = bookmark;
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   fetchBookmarks();
   bookmarkForm.reset();
