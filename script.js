@@ -40,6 +40,41 @@ const validate = (nameValue, urlValue) => {
   return true;
 };
 
+// Build Bookmarks DOM
+const buildBookmarks = () => {
+  // Build items
+  bookmarks.forEach((bookmark) => {
+    const { name, url } = bookmark;
+    // Item
+    const item = document.createElement("div");
+    item.classList.add("item");
+    // Close Icon
+    const closeIcon = document.createElement("i");
+    closeIcon.classList.add("fas", "fa-trash-alt");
+    closeIcon.setAttribute("title", "Delete Bookmark");
+    closeIcon.setAttribute("onclick", `deleteBookmark('${url}')`);
+    // Favicon / Link Container
+    const linkInfo = document.createElement("div");
+    linkInfo.classList.add("name");
+    // Favicon
+    const favicon = document.createElement("img");
+    favicon.setAttribute(
+      "src",
+      `https://s2.googleusercontent.com/s2/favicons?domain=${url}`
+    );
+    favicon.setAttribute("alt", "Favicon");
+    // Link
+    const link = document.createElement("a");
+    link.setAttribute("href", `${url}`);
+    link.setAttribute("target", "_blank");
+    link.textContent = name;
+    // Append to bookmarks container
+    linkInfo.append(favicon, link);
+    item.append(closeIcon, linkInfo);
+    bookmarksContainer.appendChild(item);
+  });
+};
+
 // Fetch Bookmarks
 const fetchBookmarks = () => {
   // Get bookmarks from localStorage if available
@@ -49,12 +84,13 @@ const fetchBookmarks = () => {
     // Create bookmarks array in localStorage
     bookmarks = [
       {
-        name: "",
-        url: "",
+        name: "bookmark-app",
+        url: "https://github.com/jedchernandez/bookmark-app",
       },
     ];
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }
+  buildBookmarks();
 };
 
 // Handle Data from Form

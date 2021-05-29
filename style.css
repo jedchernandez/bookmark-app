@@ -12,10 +12,11 @@ html {
 body {
   margin: 0;
   font-family: Roboto Slab, Arial, Helvetica, sans-serif;
-  min-height: 100vh;
+  min-height: 100%;
   background-color: var(--primary-color);
   background-color: #0c6e72;
   background-image: url(./floating-cogs.svg);
+  background-position: center;
 }
 
 /* Add Bookmark */
